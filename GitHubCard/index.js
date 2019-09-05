@@ -71,18 +71,38 @@ function gitHubCard(object) {
   myName.classList.add('name');
   userNameP.classList.add('username');
 
-  newImage.src = object.data.avatar_url;
-  myName.textContent = object.data.name;
-  userNameP.textContent = object.data.login;
-  locationP.textContent = object.data.location;
-  address.textContent = object.data.html_url;
-  followers.textContent = object.data.followers;
-  following.textContent = object.data.following;
-  bio.textContent = object.data.bio;
+  newImage.src = object.avatar_url;
+  myName.textContent = object.name;
+  userNameP.textContent = object.login;
+  locationP.textContent = object.location;
+  address.textContent = object.html_url;
+  followers.textContent = object.followers;
+  following.textContent = object.following;
+  bio.textContent = object.bio;
+
+  newCard.appendChild(newImage);
+  newCard.appendChild(cardInfo);
+  cardInfo.appendChild(myName);
+  cardInfo.appendChild(userNameP);
+  cardInfo.appendChild(locationP);
+  profileP.appendChild(address);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  return newCard;
 }
+
+const cards = document.querySelector('.cards')
 
 axios
   .get('https://api.github.com/users/ian-schwartz')
   .then(response => {
     console.log(response);
+    cards.appendChild(gitHubCard(response.data));
   })
+  .catch(error => {
+    console.log('The data was not returned', error);
+  });
+
+ 
