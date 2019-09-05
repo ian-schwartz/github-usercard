@@ -24,7 +24,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["https://api.github.com/users/lorenzosimpson","https://api.github.com/users/daveskull81","https://api.github.com/users/BrandyBecker","https://api.github.com/users/jeremyRogel","https://api.github.com/users/SkylerSlatosch"];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -53,3 +53,64 @@ const followersArray = [];
   luishrd
   bigknell
 */
+function gitHubCard(object) {
+  const newCard = document.createElement('div'),
+  newImage = document.createElement('img'),
+  cardInfo = document.createElement('div'),
+  myName = document.createElement('h3'),
+  userNameP = document.createElement('p'),
+  locationP = document.createElement('p'),
+  profileP = document.createElement('p'),
+  address = document.createElement('a'),
+  followers = document.createElement('p'),
+  following = document.createElement('p'),
+  bio = document.createElement('p');
+
+  newCard.classList.add('card');
+  cardInfo.classList.add('card-info');
+  myName.classList.add('name');
+  userNameP.classList.add('username');
+
+  newImage.src = object.avatar_url;
+  myName.textContent = object.name;
+  userNameP.textContent = object.login;
+  locationP.textContent = object.location;
+  address.textContent = object.html_url;
+  followers.textContent = object.followers;
+  following.textContent = object.following;
+  bio.textContent = object.bio;
+
+  newCard.appendChild(newImage);
+  newCard.appendChild(cardInfo);
+  cardInfo.appendChild(myName);
+  cardInfo.appendChild(userNameP);
+  cardInfo.appendChild(locationP);
+  profileP.appendChild(address);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  return newCard;
+}
+
+const cards = document.querySelector('.cards')
+
+axios.get('https://api.github.com/users/ian-schwartz')
+  .then(response => {
+    console.log(response, 'Data from followers API');
+    cards.appendChild(gitHubCard(response.data));
+  })
+  .catch(error => {
+    console.log('The data was not returned', error);
+  });
+
+  followersArray.forEach(item => {axios.get(item)
+  .then(response => {
+    console.log(response, 'Data from followers API');
+    cards.appendChild(gitHubCard(response.data));
+  })
+  .catch(error => {
+    console.log('The data was not returned', error);
+  });
+})
+ 
