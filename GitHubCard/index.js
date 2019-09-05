@@ -53,3 +53,36 @@ const followersArray = [];
   luishrd
   bigknell
 */
+function gitHubCard(object) {
+  const newCard = document.createElement('div'),
+  newImage = document.createElement('img'),
+  cardInfo = document.createElement('div'),
+  myName = document.createElement('h3'),
+  userNameP = document.createElement('p'),
+  locationP = document.createElement('p'),
+  profileP = document.createElement('p'),
+  address = document.createElement('a'),
+  followers = document.createElement('p'),
+  following = document.createElement('p'),
+  bio = document.createElement('p');
+
+  newCard.classList.add('card');
+  cardInfo.classList.add('card-info');
+  myName.classList.add('name');
+  userNameP.classList.add('username');
+
+  newImage.src = object.data.avatar_url;
+  myName.textContent = object.data.name;
+  userNameP.textContent = object.data.login;
+  locationP.textContent = object.data.location;
+  address.textContent = object.data.html_url;
+  followers.textContent = object.data.followers;
+  following.textContent = object.data.following;
+  bio.textContent = object.data.bio;
+}
+
+axios
+  .get('https://api.github.com/users/ian-schwartz')
+  .then(response => {
+    console.log(response);
+  })
