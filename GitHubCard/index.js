@@ -24,7 +24,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["https://api.github.com/users/lorenzosimpson","https://api.github.com/users/daveskull81","https://api.github.com/users/BrandyBecker","https://api.github.com/users/jeremyRogel","https://api.github.com/users/SkylerSlatosch"];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -95,14 +95,22 @@ function gitHubCard(object) {
 
 const cards = document.querySelector('.cards')
 
-axios
-  .get('https://api.github.com/users/ian-schwartz')
+axios.get('https://api.github.com/users/ian-schwartz')
   .then(response => {
-    console.log(response);
+    console.log(response, 'Data from followers API');
     cards.appendChild(gitHubCard(response.data));
   })
   .catch(error => {
     console.log('The data was not returned', error);
   });
 
+  followersArray.forEach(item => {axios.get(item)
+  .then(response => {
+    console.log(response, 'Data from followers API');
+    cards.appendChild(gitHubCard(response.data));
+  })
+  .catch(error => {
+    console.log('The data was not returned', error);
+  });
+})
  
